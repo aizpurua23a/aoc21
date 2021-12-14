@@ -1,5 +1,5 @@
 import numpy as np
-
+import time
 
 class Day11:
     def __init__(self, filename):
@@ -25,9 +25,10 @@ class Day11:
             starting_flashes = self.total_flashes
 
             unflashed_energy = starting_day_energy + np.ones(shape=(len(starting_day_energy), len(starting_day_energy)))
-            starting_day_energy = self.calculate_flashed_energy(unflashed_energy)
+            starting_day_energy = self.calculate_flashed_energy(unflashed_energy, step)
 
             flash_delta = self.total_flashes - starting_flashes
+
             if flash_delta == len(unflashed_energy) ** 2:
                 return step
 
@@ -41,7 +42,7 @@ class Day11:
 
         return self.total_flashes
 
-    def calculate_flashed_energy(self, unflashed_energy):
+    def calculate_flashed_energy(self, unflashed_energy, step):
         energy_array = unflashed_energy.copy()
 
         any_flashed = True
@@ -56,6 +57,10 @@ class Day11:
                     any_flashed = True
                     self.total_flashes += 1
 
+        if step == 11:
+            print('\n'.join([''.join([str(int(x)) for x in row]) for row in energy_array]))
+        #time.sleep(0.1)
+        #print('\n' * 10)
         return energy_array
 
     def update_new_energy_array_after_this_flash(self, new_energy_array, idy, idx):
@@ -76,10 +81,10 @@ class Day11:
 
 
 def main():
-    print(Day11('input.txt').solve_1())
-    print(Day11('input_01.txt').solve_1())
+    #print(Day11('input.txt').solve_1())
+    #print(Day11('input_01.txt').solve_1())
     print(Day11('input.txt').solve_2())
-    print(Day11('input_01.txt').solve_2())
+    #print(Day11('input_01.txt').solve_2())
 
 
 if __name__ == '__main__':
